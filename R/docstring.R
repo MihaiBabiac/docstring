@@ -136,12 +136,18 @@ docstring <- function(fun, fun_name = as.character(substitute(fun)),
     temp_file <- file.path(package_dir, "R", paste0(fun_name, ".R"))
     cat(roxy_text, file = temp_file)
 
+    # roxygen loads the package, which leads to devtools shims getting
+    # installed. We try to keep the same state as before the call to docstring
+    had_devtools_shims <- "devtools_shims" %in% search()
 
     # roxygen uses cat to display the "Writing your_function.Rd" messages so
     # I figured capturing the output would be 'safer' than using sink and
     # diverting things. Oh well.
     output <- capture.output(suppressWarnings(suppressMessages(roxygenize(package_dir, "rd"))))
 
+    if(!had_devtools_shims){
+      detach("devtools_shims")
+    }
 
     generated_Rd_file <- file.path(package_dir, "man", paste0(fun_name, ".Rd"))
 
