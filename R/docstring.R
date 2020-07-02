@@ -17,6 +17,7 @@
 #' 
 #' ##?fun 
 #' @importFrom roxygen2 roxygenize
+#' @importFrom pkgload dev_help
 #' @importFrom utils capture.output
 #' @importFrom utils package.skeleton
 #' @importFrom utils browseURL
@@ -143,6 +144,9 @@ docstring <- function(fun, fun_name = as.character(substitute(fun)),
 
 
     generated_Rd_file <- file.path(package_dir, "man", paste0(fun_name, ".Rd"))
+
+    print(dev_help(fun_name, package_name))
+    return(invisible())
 
 
     ####################################

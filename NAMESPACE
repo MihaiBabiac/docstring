@@ -3,6 +3,7 @@
 export("?")
 export(docstring)
 importFrom(roxygen2,roxygenize)
+importFrom(pkgload,dev_help)
 importFrom(utils,browseURL)
 importFrom(utils,capture.output)
 importFrom(utils,package.skeleton)
